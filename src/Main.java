@@ -1,47 +1,22 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 public class Main {
     public static void main(String[] args) {
-        System.out.println("--- Starting Day 3: Collections Challenge --- \n");
+        System.out.println("--- Starting Day 4: Inventory Engine via HashMap --- \n");
 
-        // 1. Initialize an ArrayList for the Shopping Cart (Allows Duplicates)
-        List<Product> cart = new ArrayList<>();
+        InventorySystem inventory = new InventorySystem();
 
-        Product laptop = new Product("MacBook Pro", 1299.99);
-        Product mouse = new Product("Wireless Mouse", 29.99);
+        // 1. Populate Inventory
+        inventory.addStock("LAPTOP-MAC-01", 10);
+        inventory.addStock("MOUSE-LOGI-99", 50);
 
-        // Adding elements to ArrayList
-        cart.add(laptop);
-        cart.add(mouse);
-        cart.add(mouse); // Adding a duplicate item intentionally!
+        // 2. Simulate orders coming through
+        System.out.println("\n--- Processing Outbound Shipments ---");
+        inventory.reduceStock("MOUSE-LOGI-99", 2);      // Valid shipment
+        inventory.reduceStock("LAPTOP-MAC-01", 12);     // Over-order block check
+        inventory.reduceStock("KEYBOARD-RGB-12", 1);    // Non-existent key check
 
-        System.out.println("🛒 Shopping Cart Contents (ArrayList):");
-        for (Product item : cart) {
-            System.out.println("- " + item);
-        }
-        System.out.println("Total items in cart: " + cart.size());
-
-        System.out.println("\n--------------------------------------------\n");
-
-        // 2. Initialize a HashSet for Unique Search Tags (No Duplicates Allowed)
-        Set<String> searchTags = new HashSet<>();
-
-        searchTags.add("Electronics");
-        searchTags.add("Apple");
-        searchTags.add("Gadgets");
-        searchTags.add("Electronics"); // Attempting to add a duplicate tag
-
-        System.out.println("🏷️ Unique Search Tags (HashSet):");
-        for (String tag : searchTags) {
-            System.out.println("#" + tag);
-        }
-
-        // Quick verification check
-        if (searchTags.contains("Apple")) {
-            System.out.println("\n✅ Quick search test: Found the tag 'Apple' instantly!");
-        }
+        // 3. Instant verification lookup
+        System.out.println("\n--- Final Direct Lookup Test ---");
+        String lookupKey = "MOUSE-LOGI-99";
+        System.out.println("Current active stock for " + lookupKey + " is: " + inventory.checkStock(lookupKey));
     }
 }
