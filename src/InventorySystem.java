@@ -21,16 +21,17 @@ public class InventorySystem {
     // Check out an item / reduce stock
     public void reduceStock(String sku, int quantity) {
         if (!stockTable.containsKey(sku)) {
-            System.out.println("❌ Error: Product " + sku + " does not exist in inventory!");
+            System.out.println("❌ Error: Product " + sku + " does not exist.");
             return;
         }
 
         int currentStock = stockTable.get(sku);
         if (currentStock < quantity) {
-            System.out.println("❌ Error: Insufficient stock for " + sku + ". Available: " + currentStock);
+            // Instead of a print statement, we throw our custom exception!
+            throw new InsufficientStockException("Cannot deduct " + quantity + " units of " + sku + ". Only " + currentStock + " available.");
         } else {
             stockTable.put(sku, currentStock - quantity);
-            System.out.println("💸 Shipped " + quantity + " units of " + sku + ". Remaining: " + stockTable.get(sku));
+            System.out.println("💸 Shipped " + quantity + " units of " + sku);
         }
     }
 
