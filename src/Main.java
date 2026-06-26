@@ -25,7 +25,6 @@ public class Main {
             // This block intercepts the crash and handles it safely
             System.out.println("🚨 System Alert: " + e.getMessage());
         }
-
         System.out.println("\n🚀 System sanity check: The program did not crash and continued running smoothly!");
     }
 }
